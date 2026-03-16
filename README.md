@@ -58,8 +58,8 @@ Interactive tree view for exploring JSON data.
 ### Docker Compose (recommended)
 
 ```bash
-git clone git@github.com:weijing24/diffchecker.git
-cd diffchecker
+git clone git@github.com:weijing24/devtools.git
+cd devtools
 docker compose up -d
 ```
 
