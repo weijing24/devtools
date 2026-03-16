@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diff Checker</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-row">
+      <div>
+        <h1>Dev Toolbox</h1>
+        <p class="subtitle">Diff, format, and explore your data</p>
+      </div>
+      <button id="btn-theme" class="btn-theme" title="Toggle theme"></button>
+    </div>
+  </header>
+
+  <nav class="tab-bar">
+    <button class="tab active" data-tab="diff">Diff Checker</button>
+    <button class="tab" data-tab="json-formatter">JSON Formatter</button>
+    <button class="tab" data-tab="json-viewer">JSON Viewer</button>
+  </nav>
+
+  <main>
+    <!-- Diff Checker -->
+    <section id="tab-diff" class="tab-content active">
+      <div class="toolbar">
+        <button id="btn-diff" class="btn-primary">Find Differences</button>
+        <button id="btn-swap" class="btn-secondary">Swap</button>
+        <button id="btn-clear" class="btn-secondary">Clear</button>
+        <div class="toolbar-right">
+          <label><input type="checkbox" id="chk-inline" checked> Inline diff</label>
+          <label><input type="checkbox" id="chk-ignore-whitespace"> Ignore whitespace</label>
+        </div>
+      </div>
+
+      <div class="input-area">
+        <div class="input-panel">
+          <div class="panel-header">
+            <span>Original</span>
+            <span class="char-count" id="count-left">0 chars</span>
+          </div>
+          <textarea id="text-left" placeholder="Paste original text here..." spellcheck="false"></textarea>
+        </div>
+        <div class="input-panel">
+          <div class="panel-header">
+            <span>Modified</span>
+            <span class="char-count" id="count-right">0 chars</span>
+          </div>
+          <textarea id="text-right" placeholder="Paste modified text here..." spellcheck="false"></textarea>
+        </div>
+      </div>
+
+      <div id="result-area" class="result-area hidden">
+        <div class="result-header">
+          <h2>Differences</h2>
+          <div class="result-stats" id="result-stats"></div>
+        </div>
+        <div id="diff-output" class="diff-output"></div>
+      </div>
+    </section>
+
+    <!-- JSON Formatter -->
+    <section id="tab-json-formatter" class="tab-content">
+      <div class="toolbar">
+        <button id="btn-format" class="btn-primary">Format</button>
+        <button id="btn-minify" class="btn-secondary">Minify</button>
+        <button id="btn-copy-json" class="btn-secondary">Copy</button>
+        <button id="btn-clear-json" class="btn-secondary">Clear</button>
+        <div class="toolbar-right">
+          <label>Indent:
+            <select id="sel-indent" class="sel-indent">
+              <option value="2">2 spaces</option>
+              <option value="4">4 spaces</option>
+              <option value="tab">Tab</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div class="input-area">
+        <div class="input-panel">
+          <div class="panel-header">
+            <span>Input</span>
+            <span class="char-count" id="count-json-in">0 chars</span>
+          </div>
+          <textarea id="json-input" placeholder="Paste JSON here..." spellcheck="false"></textarea>
+        </div>
+        <div class="input-panel">
+          <div class="panel-header">
+            <span>Output</span>
+            <span class="char-count" id="count-json-out">0 chars</span>
+          </div>
+          <div id="json-output" class="json-output"><pre><code id="json-output-code"></code></pre></div>
+        </div>
+      </div>
+
+      <div id="json-error" class="json-error hidden"></div>
+    </section>
+
+    <!-- JSON Viewer -->
+    <section id="tab-json-viewer" class="tab-content">
+      <div class="toolbar">
+        <button id="btn-render" class="btn-primary">Render</button>
+        <button id="btn-expand-all" class="btn-secondary">Expand All</button>
+        <button id="btn-collapse-all" class="btn-secondary">Collapse All</button>
+        <button id="btn-clear-viewer" class="btn-secondary">Clear</button>
+        <div class="toolbar-right">
+          <input type="text" id="jv-search" class="jv-search" placeholder="Search keys or values...">
+        </div>
+      </div>
+
+      <div class="jv-layout">
+        <div class="input-panel">
+          <div class="panel-header">
+            <span>Input</span>
+          </div>
+          <textarea id="jv-input" placeholder="Paste JSON here..." spellcheck="false"></textarea>
+        </div>
+        <div class="jv-tree-panel">
+          <div class="panel-header">
+            <span>Tree View</span>
+            <span id="jv-path-display" class="jv-path-display"></span>
+          </div>
+          <div id="json-tree" class="json-tree"></div>
+        </div>
+      </div>
+
+      <div id="jv-error" class="json-error hidden"></div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="diff.js"></script>
+  <script src="json-formatter.js"></script>
+  <script src="json-viewer.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
